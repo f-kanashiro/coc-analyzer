@@ -1,0 +1,12 @@
+import requests
+
+url = "https://api.clashofclans.com/v1/clans/%23PC8LCYJC/currentwar"
+
+payload = ""
+headers = {
+  'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjI5NWExZTJmLWExYWYtNDM5OS1iMDA2LWY3NmRhZDMwNWE2ZiIsImlhdCI6MTY1NjA0MjUzNCwic3ViIjoiZGV2ZWxvcGVyL2FkN2MyNzMxLTNjNGQtNmY5Yy0yZTYxLTgwNTU1NTcyMGM3MyIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjQ1LjE2MS41LjYyIl0sInR5cGUiOiJjbGllbnQifV19.jIFBN3pF-7FwyrpaQJRHhNq1i41l0cSuTeWP5n0LD4F5gMWqRdWEUvs6mSwofs7v3RDcgtCKLHaw66W0YlbZ8g'
+}
+
+response = requests.request("GET", url, headers=headers, data=payload)
+
+print(response.text)
