@@ -32,14 +32,23 @@ class BestOpponentAttack:
 
     @staticmethod
     def from_dict(obj: Any) -> 'BestOpponentAttack':
-        _attackerTag = str(obj.get("attackerTag"))
-        _defenderTag = str(obj.get("defenderTag"))
-        _stars = int(obj.get("stars"))
-        _destructionPercentage = int(obj.get("destructionPercentage"))
-        _order = int(obj.get("order"))
-        _duration = int(obj.get("duration"))
-        return BestOpponentAttack(_attackerTag, _defenderTag, _stars, _destructionPercentage, _order, _duration)
-
+        
+        if obj is not None:
+            _attackerTag = str(obj.get("attackerTag"))
+            _defenderTag = str(obj.get("defenderTag"))
+            _stars = int(obj.get("stars"))
+            _destructionPercentage = int(obj.get("destructionPercentage"))
+            _order = int(obj.get("order"))
+            _duration = int(obj.get("duration"))
+            return BestOpponentAttack(_attackerTag, _defenderTag, _stars, _destructionPercentage, _order, _duration)
+        else:
+            return BestOpponentAttack( attackerTag = None
+                                     , defenderTag = None
+                                     , stars = None
+                                     , destructionPercentage = None
+                                     , order = None
+                                     , duration = None )
+                                     
 @dataclass
 class Member:
     tag: str
@@ -58,7 +67,10 @@ class Member:
         _mapPosition = int(obj.get("mapPosition"))
         _opponentAttacks = int(obj.get("opponentAttacks"))
         _bestOpponentAttack = BestOpponentAttack.from_dict(obj.get("bestOpponentAttack"))
-        _attacks = [Attack.from_dict(y) for y in obj.get("attacks")]
+        if obj.get("attacks") is not None:
+            _attacks = [Attack.from_dict(y) for y in obj.get("attacks")]
+        else:
+            _attacks = []
         return Member(_tag, _name, _townhallLevel, _mapPosition, _opponentAttacks, _bestOpponentAttack, _attacks)
 
 
