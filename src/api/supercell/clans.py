@@ -11,8 +11,8 @@ def get_currentwar():
 
     return requests.request("GET", url, headers=headers, data=payload)
 
-def get_currentwarLeague():
-    url = "https://api.clashofclans.com/v1/clanwarleagues/wars/%232U2UR8920"
+def get_warleague(_wartag):
+    url = "https://api.clashofclans.com/v1/clanwarleagues/wars/" + _wartag
 
     payload = ""
     headers = {

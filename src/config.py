@@ -1,4 +1,4 @@
-import os
+import os.path
 import configparser
 from pathlib import Path
 
