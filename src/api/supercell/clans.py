@@ -32,7 +32,7 @@ def get_currentwar():
         if(rq.status_code == 200):
             return getCW_obj(rq.text)
         else:
-            raise Exception("Request error\nURL=" + url + "\n" + rq.status_code + " - " + rq.text)
+            raise Exception("Request error\nURL=" + url + "\n" + str(rq.status_code) + " - " + rq.text)
     except Exception as e:
         raise Exception("Request error\nURL=" + url + "\n" + str(e))
 
