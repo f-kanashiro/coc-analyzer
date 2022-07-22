@@ -13,8 +13,8 @@ def localtest():
 def run():
   try:
     if localtest():
-      file = open(str(pathlib.Path(__file__).parent.resolve()) + '/examples/currentwar_preparation.json', 'r')
-      cw = clans.getCW_obj(file.read())
+      with open(str(pathlib.Path(__file__).parent.resolve()) + '/examples/currentwar_preparation.json', mode = 'r') as f:        
+        cw = clans.getCW_obj(f.read())
     else:
       cw = clans.get_currentwar()
 
@@ -23,11 +23,12 @@ def run():
       remaining_time = (start_time - timedelta(hours = 3)) - datetime.now()
     elif isinstance(cw, currentwar_inwar.Root):
       endtime = datetime.strptime(cw.endTime, "%Y%m%dT%H%M%S.%fZ")
-      remaining_time = (endtime - timedelta(hours = 3)) - datetime.now()
+      remaining_time = (endtime - timedelta(hours = 3)) - datetime.now()    
+      
+    with open(str(pathlib.Path(__file__).parent.resolve()) + '/reports/war_preparation.txt', mode = 'r') as f:
+      report = f.read()
 
-    r = open(str(pathlib.Path(__file__).parent.resolve()) + '/reports/war_preparation.txt', 'r').read()
-    
-    print(r.format(clan = cw.clan.name, remaining_hours = reports.remaining_time_str(remaining_time)))
+    print(report.format(clan = cw.clan.name, remaining_hours = reports.remaining_time_str(remaining_time)))
   except Exception as e:
     print(str(e))
     exit()

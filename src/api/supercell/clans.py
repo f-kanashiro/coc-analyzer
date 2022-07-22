@@ -13,8 +13,11 @@ def getCW_obj(cwjson):
       return currentwar_preparation.Root.from_dict(cw)
     elif cw['state'] == 'inWar':
       return currentwar_inwar.Root.from_dict(cw)
+      #TODO create warEnded model
+    elif cw['state'] == 'warEnded': #'warEnded' state have the same data type of 'inWar' state
+      return currentwar_inwar.Root.from_dict(cw)
     else:
-      raise Exception("Cannot deserialize JSON into object: Invalid state")
+      raise Exception("Invalid state")
   except Exception as e:
     raise Exception("Cannot deserialize JSON into object: " + str(e))
 
