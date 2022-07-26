@@ -13,7 +13,7 @@ def localtest():
 def run():
   try:
     if localtest():
-      with open(str(pathlib.Path(__file__).parent.resolve()) + '/examples/currentwar_preparation.json', mode = 'r') as f:        
+      with open(str(pathlib.Path(__file__).parent.resolve()) + '/examples/currentwar_preparation.json', mode = 'r') as f:
         cw = clans.getCW_obj(f.read())
     else:
       cw = clans.get_currentwar()
@@ -26,8 +26,11 @@ def run():
 
       print(report.format(clan = cw.clan.name, remaining_hours = utils.reports.remaining_time_str(start_time)))
     elif isinstance(cw, currentwar_inwar.Root):
-      end_time = utils.reports.get_remaining_local_time(cw.endTime)      
-    
+      end_time = utils.reports.remaining_local_time(cw.endTime)
+
+      #get members with remaining attacks to do
+      attacks = [m for m in cw.clan.members if len(m.attacks) < cw.attacksPerMember]
+      print(attacks)
   except Exception as e:
     print(str(e))
     exit()
