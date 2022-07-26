@@ -12,3 +12,8 @@ def remaining_time_str(rt):
             return str(hours) + " hora e " + str(minutes) + " minutos"
         else:
             return str(hours) + " horas e " + str(minutes) + " minutos"
+
+# Receives datetime from json and returns de remaining time at local timezone
+def remaining_local_time(t):
+    rt = datetime.strptime(t, "%Y%m%dT%H%M%S.%fZ")
+    return (rt - timedelta(hours = 3)) - datetime.now()

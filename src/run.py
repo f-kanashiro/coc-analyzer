@@ -1,5 +1,5 @@
 import api.supercell.clans as clans
-import utils.reports as reports
+import utils.reports
 import json
 import pytz
 import pathlib
@@ -18,17 +18,16 @@ def run():
     else:
       cw = clans.get_currentwar()
 
-    if isinstance(cw, currentwar_preparation.Root):
-      start_time = datetime.strptime(cw.startTime, "%Y%m%dT%H%M%S.%fZ")
-      remaining_time = (start_time - timedelta(hours = 3)) - datetime.now()
-    elif isinstance(cw, currentwar_inwar.Root):
-      endtime = datetime.strptime(cw.endTime, "%Y%m%dT%H%M%S.%fZ")
-      remaining_time = (endtime - timedelta(hours = 3)) - datetime.now()    
-      
-    with open(str(pathlib.Path(__file__).parent.resolve()) + '/reports/war_preparation.txt', mode = 'r') as f:
-      report = f.read()
+    if isinstance(cw, currentwar_preparation.Root):    
+      start_time = utils.reports.remaining_local_time(cw.startTime)
 
-    print(report.format(clan = cw.clan.name, remaining_hours = reports.remaining_time_str(remaining_time)))
+      with open(str(pathlib.Path(__file__).parent.resolve()) + '/reports/war_preparation.txt', mode = 'r') as f:
+        report = f.read()
+
+      print(report.format(clan = cw.clan.name, remaining_hours = utils.reports.remaining_time_str(start_time)))
+    elif isinstance(cw, currentwar_inwar.Root):
+      end_time = utils.reports.get_remaining_local_time(cw.endTime)      
+    
   except Exception as e:
     print(str(e))
     exit()
