@@ -16,7 +16,11 @@ def run():
       with open(str(pathlib.Path(__file__).parent.resolve()) + '/examples/currentwar_preparation.json', mode = 'r') as f:
         cw = clans.getCW_obj(f.read())
     else:
-      cw = clans.get_currentwar()
+      if datetime.now().day in range(1,7):
+        lg = clans.get_leaguegroup()
+        print(lg)
+      else:
+        cw = clans.get_currentwar()
 
     if isinstance(cw, currentwar_preparation.Root):    
       start_time = formatting.remaining_local_time(cw.startTime)
