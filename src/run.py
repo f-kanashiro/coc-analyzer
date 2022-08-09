@@ -16,9 +16,11 @@ def run():
       with open(str(pathlib.Path(__file__).parent.resolve()) + '/examples/currentwar_preparation.json', mode = 'r') as f:
         cw = clans.getCW_obj(f.read())
     else:
-      if datetime.now().day in range(1,7):
+      #First 9 days of month may occurs CWL
+      if 1 <= datetime.now().day <= 9:
         lg = clans.get_leaguegroup()
         print(lg)
+        exit()
       else:
         cw = clans.get_currentwar()
 
