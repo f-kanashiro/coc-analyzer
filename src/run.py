@@ -1,4 +1,5 @@
 import api.supercell.clans as clans
+import api.telegram.telegram_messages as telegram_messages
 import json
 import pytz
 import pathlib
@@ -8,12 +9,12 @@ from utils import formatting, reports
 from models import currentwar_inwar, currentwar_preparation
 
 def localtest():
-  return False
+  return True
 
 def run():
   try:
     if localtest():
-      with open(str(pathlib.Path(__file__).parent.resolve()) + '/examples/currentwar_preparation.json', mode = 'r') as f:
+      with open(str(pathlib.Path(__file__).parent.resolve()) + '/examples/currentwar_inwar.json', mode = 'r') as f:
         cw = clans.getCW_obj(f.read())
     else:
       #First 9 days of month may occurs CWL
@@ -30,7 +31,7 @@ def run():
       with open(str(pathlib.Path(__file__).parent.resolve()) + '/reports/war_preparation.txt', mode = 'r') as prep_file:
         prep_report = prep_file.read()
 
-      print(prep_report.format(clan = cw.clan.name, remaining_hours = formatting.remaining_time_str(start_time)))
+      telegram_messages.war_status(prep_report.format(clan = cw.clan.name, remaining_hours = formatting.remaining_time_str(start_time)))
     elif isinstance(cw, currentwar_inwar.Root):
       end_time = formatting.remaining_local_time(cw.endTime)
       reports.inwar(
